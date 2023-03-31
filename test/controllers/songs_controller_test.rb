@@ -14,7 +14,14 @@ class SongsControllerTest < ActionDispatch::IntegrationTest
       post "/songs.json", params: { title: "Under Pressure", artist: "Logic", year: 2014 }
       assert_response 200
     end
+  test "show" do
+    get "/songs/#{Song.first.id}.json"
+    assert_response 200
 
-  end
+    data = JSON.parse(response.body)
+    assert_equal ["id", "title", "artist", "year","created_at","updated_at"], data.keys
+  end 
+
+  
 
 end
